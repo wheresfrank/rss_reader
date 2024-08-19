@@ -41,6 +41,12 @@ gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+# Parse XML and HTML [https://github.com/sparklemotion/nokogiri]
+gem 'nokogiri'
+gem 'open-uri'
+
+gem "font-awesome-sass", "~> 6.5.2"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -58,6 +64,8 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  
+  gem "byebug"
 
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 end
