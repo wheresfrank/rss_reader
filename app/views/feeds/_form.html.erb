@@ -11,22 +11,24 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="columns">
+    <div class="column is-one-third field mr-3">
+      <%= form.label :name, class: "label" %>
+      <%= form.text_field :name, class: "input", placeholder: "Name of RSS Feed" %>
+    </div>
+
+    <div class="column is-two-thirds field">
+      <%= form.label :source, class: "label" %>
+      <%= form.text_field :source, class: "input", placeholder: "Enter RSS XML Link" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :source, style: "display: block" %>
-    <%= form.text_field :source %>
-  </div>
-
-  <div>
-    <%= form.label :favorite, style: "display: block" %>
+  <div class="field">
     <%= form.check_box :favorite %>
+    <%= form.label "Mark as favorite", class: "checkbox" %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Add Feed", class: "button is-primary mt-4" %>
   </div>
 <% end %>

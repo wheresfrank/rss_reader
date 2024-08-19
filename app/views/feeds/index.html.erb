@@ -12,10 +12,13 @@
       </ul>
     </aside>
     <hr>
-    <%= link_to new_feed_path, class: "button is-link" do %>
+    <%= link_to new_feed_path, class: "button is-link", data: { turbo_frame: :feed_panel } do %>
        <%= icon('fas', 'plus') %>&nbsp;Add Feed
     <% end %>
     </div>
   </div>
-  <div class="column"></div>
+  <div class="column">
+    <%= turbo_frame_tag :feed_panel do %>
+    <% end %>
+  </div>
 </div>
