@@ -32,9 +32,10 @@ class FeedsController < ApplicationController
   # POST /feeds or /feeds.json
   def create
     @feed = current_user.feeds.build(feed_params)
+    validate_feed_source(@feed)
 
     respond_to do |format|
-      if @feed.save
+      if @feed.errors.empty? && @feed.save
         format.html { redirect_to feed_url(@feed), notice: "Feed was successfully created." }
         format.json { render :show, status: :created, location: @feed }
       else
@@ -46,8 +47,10 @@ class FeedsController < ApplicationController
 
   # PATCH/PUT /feeds/1 or /feeds/1.json
   def update
+    validate_feed_source(@feed)
+
     respond_to do |format|
-      if @feed.update(feed_params)
+      if @feed.errors.empty? && @feed.update(feed_params)
         format.html { redirect_to feed_url(@feed), notice: "Feed was successfully updated." }
         format.json { render :show, status: :ok, location: @feed }
       else
@@ -68,32 +71,47 @@ class FeedsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_feed
-      @feed = Feed.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_feed
+    @feed = Feed.find(params[:id])
+  end
 
-    # Extract arcles from RSS Feeds
-    def extract_articles
-      articles = []
-  
-      @doc.xpath('//rss/channel/item').each do |item|
-        article = {
-          title: item.at_xpath('title')&.text,
-          link: item.at_xpath('link')&.text,
-          description: item.at_xpath('description')&.text,
-          pub_date: item.at_xpath('pubDate')&.text,
-          image: item.at_xpath('image')&.text
-        }
-  
-        articles << article
+  # Validate the source of the feed is valid
+  def validate_feed_source(feed)
+    begin
+      parser = RssFeedParser.new(feed_params[:source])
+      articles = parser.extract_articles
+
+      if articles.empty?
+        raise "Unable to extract articles from the feed."
       end
-  
-      articles
+
+    rescue => e
+      feed.errors.add(:source, "is invalid or unreachable: #{e.message}")
+    end
+  end
+
+  # Extract arcles from RSS Feeds
+  def extract_articles
+    articles = []
+
+    @doc.xpath('//rss/channel/item').each do |item|
+      article = {
+        title: item.at_xpath('title')&.text,
+        link: item.at_xpath('link')&.text,
+        description: item.at_xpath('description')&.text,
+        pub_date: item.at_xpath('pubDate')&.text,
+        image: item.at_xpath('image')&.text
+      }
+
+      articles << article
     end
 
-    # Only allow a list of trusted parameters through.
-    def feed_params
-      params.require(:feed).permit(:name, :source, :favorite, :user_id)
-    end
+    articles
+  end
+
+  # Only allow a list of trusted parameters through.
+  def feed_params
+    params.require(:feed).permit(:name, :source, :favorite, :user_id)
+  end
 end
