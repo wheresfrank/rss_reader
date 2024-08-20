@@ -5,14 +5,14 @@
     <% @articles.each do |article| %>
       <div class="article is-flex is-flex-direction-row">
         <% if article[:image].present? %>
-          <figure class="image is-64x64 mr-2">
+          <figure class="image is-64x64 mr-2 mt-1">
             <img src="<%= article[:image] %>" alt="<%= article[:title] %> image" class="artical-image">
           </figure>
         <% end %>
         <div class="article-content">
           <h2 class="has-text-weight-bold"><a href="<%= article[:link] %>" target="_blank"><%= article[:title] %></a></h2>
           <p><%= article[:description].html_safe %></p>
-          <p><small><%= article[:pub_date] %></small></p>
+          <p><small><%= time_ago_in_words(article[:pub_date]) %> ago</small></p>
         </div>
       </div>
       <hr>
