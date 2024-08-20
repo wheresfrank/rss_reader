@@ -1,10 +1,28 @@
-<p style="color: green"><%= notice %></p>
+<%= turbo_frame_tag :feed_panel do %>
+  <section class="section">
+    <p style="color: green"><%= notice %></p>
 
-<%= render @feed %>
+    <% @articles.each do |article| %>
+      <div class="article is-flex is-flex-direction-row">
+        <% if article[:image].present? %>
+          <figure class="image is-64x64 mr-2">
+            <img src="<%= article[:image] %>" alt="<%= article[:title] %> image" class="artical-image">
+          </figure>
+        <% end %>
+        <div class="article-content">
+          <h2 class="has-text-weight-bold"><a href="<%= article[:link] %>" target="_blank"><%= article[:title] %></a></h2>
+          <p><%= article[:description].html_safe %></p>
+          <p><small><%= article[:pub_date] %></small></p>
+        </div>
+      </div>
+      <hr>
+    <% end %>
 
-<div>
-  <%= link_to "Edit this feed", edit_feed_path(@feed) %> |
-  <%= link_to "Back to feeds", feeds_path %>
+    <div>
+      <%= link_to "Edit this feed", edit_feed_path(@feed) %> |
+      <%= link_to "Back to feeds", feeds_path %>
 
-  <%= button_to "Destroy this feed", @feed, method: :delete %>
-</div>
+      <%= button_to "Destroy this feed", @feed, method: :delete %>
+    </div>
+  </section>
+<% end %>

@@ -9,6 +9,8 @@ class FeedsController < ApplicationController
 
   # GET /feeds/1 or /feeds/1.json
   def show
+    parser = RssFeedParser.new(@feed.source)
+    @articles = parser.extract_articles
   end
 
   # GET /feeds/new
@@ -62,6 +64,25 @@ class FeedsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_feed
       @feed = Feed.find(params[:id])
+    end
+
+    # Extract arcles from RSS Feeds
+    def extract_articles
+      articles = []
+  
+      @doc.xpath('//rss/channel/item').each do |item|
+        article = {
+          title: item.at_xpath('title')&.text,
+          link: item.at_xpath('link')&.text,
+          description: item.at_xpath('description')&.text,
+          pub_date: item.at_xpath('pubDate')&.text,
+          image: item.at_xpath('image')&.text
+        }
+  
+        articles << article
+      end
+  
+      articles
     end
 
     # Only allow a list of trusted parameters through.
