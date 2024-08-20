@@ -19,7 +19,7 @@ To set up the RSS Reader locally, follow these steps:
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/rss-reader.git
+    git clone https://github.com/wheresfrank/rss_reader.git
     cd rss-reader
     ```
 
