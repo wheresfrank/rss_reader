@@ -1,10 +1,20 @@
-<p style="color: green"><%= notice %></p>
+<%= turbo_frame_tag :feed_panel do %>
+  <% if @articles %>
+    <%= render "feed_list", articles: @articles %>
+  <% else %>
+    <div class="contanier mt-5">
+      <h2 class="subtitle">
+        No articles found
+      </h2>
+      <p>
+        Check your source code and edit or delete feed if necessary
+      </p>
+    </div>
+    <hr>
+  <% end %>
+    <div class="is-flex flex-directoin-row">
+      <%= link_to "Edit this feed", edit_feed_path(@feed), class: 'button is-link mr-3' %> 
 
-<%= render @feed %>
-
-<div>
-  <%= link_to "Edit this feed", edit_feed_path(@feed) %> |
-  <%= link_to "Back to feeds", feeds_path %>
-
-  <%= button_to "Destroy this feed", @feed, method: :delete %>
-</div>
+      <%= button_to "Remove this feed", @feed, method: :delete, class: 'button is-danger' %>
+    </div>
+<% end %>

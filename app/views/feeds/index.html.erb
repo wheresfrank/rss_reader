@@ -1,14 +1,29 @@
 <p style="color: green"><%= notice %></p>
-
-<h1>Feeds</h1>
-
-<div id="feeds">
-  <% @feeds.each do |feed| %>
-    <%= render feed %>
-    <p>
-      <%= link_to "Show this feed", feed %>
-    </p>
-  <% end %>
+<div class="columns">
+  <div class="column is-3">
+    <div class="container m-4">
+    <aside class="menu">
+      <p class="menu-label is-size-5 mb-3">Feeds</p>
+      <ul class="menu-list">
+        <li>
+          <%= link_to feeds_path do %>
+            <%= icon('fas', 'rss')%> <span class="ml-2">All Feeds</span>
+          <% end %>
+        </li>
+        <% @feeds.each do |feed| %>
+          <%= render feed %>
+        <% end %>
+      </ul>
+    </aside>
+    <hr>
+    <%= link_to new_feed_path, class: "button is-link", data: { turbo_frame: :feed_panel } do %>
+       <%= icon('fas', 'plus') %>&nbsp;Add Feed
+    <% end %>
+    </div>
+  </div>
+  <div class="column">
+    <%= turbo_frame_tag :feed_panel do %>
+      <%= render "feed_list", articles: @articles %>
+    <% end %>
+  </div>
 </div>
-
-<%= link_to "New feed", new_feed_path %>
