@@ -3,7 +3,7 @@ class Feed < ApplicationRecord
 
   def icon
     feed_url = self.source
-    parser = RssFeedParser.new(feed_url)
+    parser = RssFeedParser.new(self)
     parser.extract_icon
   end
 end

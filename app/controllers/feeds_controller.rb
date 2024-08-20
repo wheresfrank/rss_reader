@@ -6,18 +6,20 @@ class FeedsController < ApplicationController
   def index
     @feeds = current_user.feeds
     @articles = @feeds.flat_map do |feed|
-      parser = RssFeedParser.new(feed.source)
-      parser.extract_articles
-    end
+      parser = RssFeedParser.new(feed)
+      articles = parser.extract_articles
+      
+      articles if articles.present?
+    end.compact
     
     @articles.sort_by! { |article| -DateTime.parse(article[:pub_date]).to_i }
   end
 
   # GET /feeds/1 or /feeds/1.json
   def show
-    parser = RssFeedParser.new(@feed.source)
+    parser = RssFeedParser.new(@feed)
     @articles = parser.extract_articles
-    @articles.sort_by! { |article| -DateTime.parse(article[:pub_date]).to_i }
+    @articles.sort_by! { |article| -DateTime.parse(article[:pub_date]).to_i } if @articles.present?
   end
 
   # GET /feeds/new
@@ -47,6 +49,7 @@ class FeedsController < ApplicationController
 
   # PATCH/PUT /feeds/1 or /feeds/1.json
   def update
+    @feed = current_user.feeds.build(feed_params)
     validate_feed_source(@feed)
 
     respond_to do |format|
@@ -79,7 +82,7 @@ class FeedsController < ApplicationController
   # Validate the source of the feed is valid
   def validate_feed_source(feed)
     begin
-      parser = RssFeedParser.new(feed_params[:source])
+      parser = RssFeedParser.new(feed)
       articles = parser.extract_articles
 
       if articles.empty?

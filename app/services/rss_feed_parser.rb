@@ -2,11 +2,18 @@ class RssFeedParser
   require 'nokogiri'
   require 'open-uri'
 
-  def initialize(feed_url)
-    @doc = Nokogiri::XML(URI.open(feed_url))
+  def initialize(feed)
+    @feed = feed
+    begin
+      @doc = Nokogiri::XML(URI.open(feed.source))
+    rescue => e
+      @feed.errors.add(:source, "is invalid or unreachable: #{e.message}")
+    end
   end
 
   def extract_icon
+    return if @feed.errors.any?
+
     # Look for an Atom icon first
     icon_element = @doc.at_xpath('//atom:feed/atom:icon', 'atom' => 'http://www.w3.org/2005/Atom')
 
@@ -21,6 +28,8 @@ class RssFeedParser
   end
 
   def extract_articles
+  return if @feed.errors.any?
+  
   articles = []
   atom_ns = { 'atom' => 'http://www.w3.org/2005/Atom' }
 
