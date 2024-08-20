@@ -4,13 +4,20 @@ class FeedsController < ApplicationController
 
   # GET /feeds or /feeds.json
   def index
-    @feeds = Feed.all
+    @feeds = current_user.feeds
+    @articles = @feeds.flat_map do |feed|
+      parser = RssFeedParser.new(feed.source)
+      parser.extract_articles
+    end
+    
+    @articles.sort_by! { |article| -DateTime.parse(article[:pub_date]).to_i }
   end
 
   # GET /feeds/1 or /feeds/1.json
   def show
     parser = RssFeedParser.new(@feed.source)
     @articles = parser.extract_articles
+    @articles.sort_by! { |article| -DateTime.parse(article[:pub_date]).to_i }
   end
 
   # GET /feeds/new
