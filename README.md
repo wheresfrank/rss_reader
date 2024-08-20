@@ -66,7 +66,7 @@ At this time, the RSS Reader is primarily a portfolio project, but contributions
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the AGPL-3.0 License. See the [LICENSE](LICENSE) file for more details.
 
 ## Screenshots
 
