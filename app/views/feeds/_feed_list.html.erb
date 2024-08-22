@@ -9,7 +9,7 @@
           </figure>
         <% end %>
         <div class="article-content">
-          <h2 class="has-text-weight-bold"><a href="<%= article[:link] %>" target="_blank"><%= article[:title] %></a></h2>
+          <h2 class="has-text-weight-bold"><a href="<%= article[:link] %>" target="_blank"><%= article_title(article) %></a></h2>
           <p><%= parse_description(article[:description]) %></p>
           <p><small><%= time_ago_in_words(article[:pub_date]) %> ago</small></p>
         </div>

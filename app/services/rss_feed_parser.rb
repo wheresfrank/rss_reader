@@ -42,6 +42,7 @@ class RssFeedParser
       # RSS Feed Parsing
       @doc.xpath('//rss/channel/item').each do |item|
         article = {
+          feed_name: @feed.name,
           title: item.at_xpath('title')&.text,
           link: item.at_xpath('link')&.text,
           description: item.at_xpath('description')&.text,
@@ -65,6 +66,7 @@ class RssFeedParser
       # Atom Feed Parsing
       @doc.xpath('//atom:feed/atom:entry', @namespaces).each do |entry|
         article = {
+          feed_name: @feed.name,
           title: entry.at_xpath('atom:title', @namespaces)&.text,
           link: entry.at_xpath('atom:link[@rel="alternate"]', @namespaces)&.[]('href'),
           description: entry.at_xpath('atom:content', @namespaces)&.text || entry.at_xpath('atom:summary', @namespaces)&.text,
