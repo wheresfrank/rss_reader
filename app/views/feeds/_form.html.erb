@@ -1,4 +1,4 @@
-<%= form_with(model: feed) do |form| %>
+<%= form_with(model: feed, data: { turbo: false }) do |form| %>
   <% if feed.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(feed.errors.count, "error") %> prohibited this feed from being saved:</h2>
@@ -29,6 +29,6 @@
   </div>
 
   <div>
-    <%= form.submit "Add Feed", class: "button is-primary mt-4" %>
+    <%= form.submit "Submit", class: "button is-primary mt-4" %>
   </div>
 <% end %>
