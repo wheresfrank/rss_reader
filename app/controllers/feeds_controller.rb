@@ -38,7 +38,7 @@ class FeedsController < ApplicationController
 
     respond_to do |format|
       if @feed.errors.empty? && @feed.save
-        format.html { redirect_to feed_url(@feed), notice: "Feed was successfully created." }
+        format.html { redirect_to feeds_url, notice: "Feed was successfully created." }
         format.json { render :show, status: :created, location: @feed }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -49,12 +49,14 @@ class FeedsController < ApplicationController
 
   # PATCH/PUT /feeds/1 or /feeds/1.json
   def update
-    @feed = current_user.feeds.build(feed_params)
-    validate_feed_source(@feed)
+    # Create a temporary feed object with the new params to validate before updating
+    temp_feed = Feed.new(feed_params)
+    temp_feed.id = @feed.id
+    validate_feed_source(temp_feed)
 
     respond_to do |format|
       if @feed.errors.empty? && @feed.update(feed_params)
-        format.html { redirect_to feed_url(@feed), notice: "Feed was successfully updated." }
+        format.html { redirect_to feeds_url, notice: "Feed was successfully updated." }
         format.json { render :show, status: :ok, location: @feed }
       else
         format.html { render :edit, status: :unprocessable_entity }

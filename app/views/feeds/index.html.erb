@@ -1,16 +1,15 @@
-<p style="color: green"><%= notice %></p>
 <div class="columns">
   <div class="column is-3">
     <div class="container m-4">
-    <aside class="menu">
-      <p class="menu-label is-size-5 mb-3">Feeds</p>
+    <aside class="menu" data-controller="menu">
+      <p class="menu-label is-size-5 mb-3 has">Feeds</p>
       <ul class="menu-list">
         <li>
-          <%= link_to feeds_path do %>
+          <%= link_to feeds_path, class: "has-text-weight-bold", data: { menu_target: "item", feed_id: "feed_all" } do %>
             <%= icon('fas', 'rss')%> <span class="ml-2">All Feeds</span>
           <% end %>
         </li>
-        <% @feeds.each do |feed| %>
+        <% @feeds.sort_by(&:name).each do |feed| %>
           <%= render feed %>
         <% end %>
       </ul>

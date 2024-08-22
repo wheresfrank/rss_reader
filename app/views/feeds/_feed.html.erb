@@ -1,5 +1,5 @@
-<li id="<%= dom_id feed %>">
-  <%= link_to feed_path(feed.id), data: { turbo_frame: :feed_panel } do %>
+<li>
+  <%= link_to feed_path(feed.id), data: { menu_target: "item", feed_id: "feed_#{feed.id}", turbo_frame: "feed_panel" } do %>
     <div class="is-flex is-flex-direction-row">
       <div class="feed-icon-container mr-2">
         <% if feed.icon.present? %>
