@@ -111,6 +111,7 @@ GEM
     error_highlight (0.6.0)
     erubi (1.13.0)
     ffi (1.17.0-x86_64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     font-awesome-sass (6.5.2)
       sassc (~> 2.0)
     globalid (1.2.1)
@@ -154,6 +155,8 @@ GEM
       net-protocol
     nio4r (2.7.3)
     nokogiri (1.16.7-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     open-uri (0.4.1)
       stringio
@@ -268,6 +271,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
@@ -296,4 +300,4 @@ RUBY VERSION
    ruby 3.1.1p18
 
 BUNDLED WITH
-   2.3.7
+   2.5.17
