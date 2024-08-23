@@ -1,49 +1,46 @@
-<section class="section">
-  <div class="columns">
-    <div class="column is-one-third"></div>
-    <div class="column is-one-third">
-      <h2 class="title has-text-centered">Edit <%= resource_name.to_s.humanize %></h2>
+<%= turbo_frame_tag :feed_panel do %>
+  <section class="section">
+    <div class="columns">
+      <div class="column is-one-third">
+        <h2 class="subtitle">Edit <%= resource_name.to_s.humanize %></h2>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-        <%= render "devise/shared/error_messages", resource: resource %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
 
-        <div class="field">
-          <%= f.label :email, class: "label" %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
-        </div>
+          <div class="field">
+            <%= f.label :email, class: "label" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
+          </div>
 
-        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-        <% end %>
-
-        <div class="field">
-          <%= f.label :password, class: "label" %> <i>(leave blank if you don't want to change it)</i>
-          <%= f.password_field :password, autocomplete: "new-password", class: "input" %>
-          <% if @minimum_password_length %>
-            <br />
-            <em><%= @minimum_password_length %> characters minimum</em>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
           <% end %>
-        </div>
 
-        <div class="field">
-          <%= f.label :password_confirmation, class: "label" %>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input" %>
-        </div>
+          <div class="field">
+            <%= f.label :password, class: "label" %> <i>(leave blank if you don't want to change it)</i>
+            <%= f.password_field :password, autocomplete: "new-password", class: "input" %>
+            <% if @minimum_password_length %>
+              <br />
+              <em><%= @minimum_password_length %> characters minimum</em>
+            <% end %>
+          </div>
 
-        <div class="field">
-          <%= f.label :current_password, class: "label" %> <i>(we need your current password to confirm your changes)</i>
-          <%= f.password_field :current_password, autocomplete: "current-password", class: "input" %>
-        </div>
+          <div class="field">
+            <%= f.label :password_confirmation, class: "label" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input" %>
+          </div>
 
-        <div class="actions is-flex flex-direction-row">
-          <%= f.submit "Update", class: "button is-primary mr-3" %>
-          <%= button_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure? We don't keep your data, so there are no take-backsies once your account is deleted.", turbo_confirm: "Are you sure? We don't keep your data, so there are no take-backsies once your account is deleted." }, method: :delete, class: "button is-danger" %>
-        </div>
-      <% end %>
-      <hr>
-      <div class="links mt-3">
-        <%= link_to "Back", :back, class: "pt-3" %>
+          <div class="field">
+            <%= f.label :current_password, class: "label" %> <i>(we need your current password to confirm your changes)</i>
+            <%= f.password_field :current_password, autocomplete: "current-password", class: "input" %>
+          </div>
+
+          <div class="actions is-flex flex-direction-row">
+            <%= f.submit "Update", class: "button is-primary mr-3" %>
+            <%= button_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure? We don't keep your data, so there are no take-backsies once your account is deleted.", turbo_confirm: "Are you sure? We don't keep your data, so there are no take-backsies once your account is deleted." }, method: :delete, class: "button is-danger" %>
+          </div>
+        <% end %>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+<% end %>

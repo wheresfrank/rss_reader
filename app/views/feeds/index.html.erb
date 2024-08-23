@@ -14,10 +14,22 @@
         <% end %>
       </ul>
     </aside>
+    <div>
+      <%= link_to new_feed_path, class: "button is-link is-small mt-4", data: { turbo_frame: :feed_panel } do %>
+        <%= icon('fas', 'plus') %>&nbsp;Add Feed
+      <% end %>
+    </div>
     <hr>
-    <%= link_to new_feed_path, class: "button is-link", data: { turbo_frame: :feed_panel } do %>
-       <%= icon('fas', 'plus') %>&nbsp;Add Feed
-    <% end %>
+    <div>
+      <%= link_to edit_user_registration_path, class: "button is-link is-outlined is-small mt-3", data: { turbo_frame: :feed_panel } do %>
+        <%= icon('fas', 'gear') %>&nbsp;Account Settings
+      <% end %>
+    </div>
+    <div>
+      <%= link_to destroy_user_session_path, class: "button is-danger is-outlined is-small mt-3", data: { turbo_method: :delete } do %>
+        <%= icon('fas', 'right-from-bracket') %>&nbsp;Sign Out
+      <% end %>
+    </div>
     </div>
   </div>
   <div class="column">
