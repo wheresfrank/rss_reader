@@ -1,6 +1,8 @@
 
 # RSS Reader
 
+[Demo](https://rss-reader-irkm.onrender.com/) - This is hosted on a "Hobby" instance, so it may take a minute to spin up when you first visit.
+
 ## Overview
 
 **RSS Reader** is a simple, open-source RSS reader built with Ruby on Rails. This project allows users to create accounts, add RSS feeds, and view articles in a streamlined, minimalist interface. Designed to be lightweight and easy to use, RSS Reader offers essential features for managing and reading RSS feeds, making it an excellent addition to any portfolio.
